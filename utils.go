@@ -25,3 +25,25 @@ func GetFilenamesFromDir(startIdx int, endIdx int, dataDir string) []string {
 
 	return output
 }
+
+// GetFilenames is a wrapper around GetFilenamesFromDir. It extracts the
+// filepaths from the specified directories with respect to calculated indexes
+func GetFilenames() []string {
+	dirs := [5]string{"data/test/neg", "data/test/pos", "data/train/neg", "data/train/pos", "data/train/unsup"}
+	bStartIdx := 9000
+	bEndIdx := 9250
+	eStartIdx := 36000
+	eEndIdx := 37000
+
+	var outArr []string
+	var temp []string
+	for i, v := range dirs {
+		if i != 4 {
+			temp = GetFilenamesFromDir(bStartIdx, bEndIdx, v)
+		} else {
+			temp = GetFilenamesFromDir(eStartIdx, eEndIdx, v)
+		}
+		outArr = append(outArr, temp...)
+	}
+	return outArr
+}
