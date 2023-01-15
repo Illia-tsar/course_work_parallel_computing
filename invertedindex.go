@@ -63,3 +63,11 @@ func (invertedIndex *InvertedIndex) AddItem(Term string, Document int) {
 		itemsMutex.Unlock()
 	}
 }
+
+func CreateInvertedIndex() *InvertedIndex {
+	invertedIndex := &InvertedIndex{
+		HashMap: make(map[string]*InvertedIndexItem),
+		Items:   []*InvertedIndexItem{},
+	}
+	return invertedIndex
+}
