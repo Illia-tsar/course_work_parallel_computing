@@ -20,9 +20,9 @@ Next, add documents to this directory, so that inverted index has data to work o
 
 `go run . -n 2 -pb=true -t=true`
 
-<h5 align="center">Parameters:</h5>
-*  t - show execution time(defaults to true)
-*  pb - parallel build(defaults to true)
-*  n - the number of goroutines(defaults to 1)
-*  s - search term in index, or not(defaults to false)
-*  sw - the word to search(defaults to "")
+## Parameters:
+* t - show execution time(defaults to true)
+* pb - parallel build(defaults to true)
+* n - the number of goroutines(defaults to 1)
+* s - search term in index, or not(defaults to false)
+* sw - the word to search(defaults to "")
