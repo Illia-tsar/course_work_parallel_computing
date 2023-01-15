@@ -1,6 +1,7 @@
 package course_work_parallel_computing
 
 import (
+	"io"
 	"log"
 	"os"
 )
@@ -46,4 +47,18 @@ func GetFilenames() []string {
 		outArr = append(outArr, temp...)
 	}
 	return outArr
+}
+
+// FilenameToDoc opens and reads all the contents of a file specified
+// with filepath and turns the array of bytes into string
+func FilenameToDoc(filepath string) string {
+	file, err := os.Open(filepath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	f, err := io.ReadAll(file)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return string(f[:])
 }
