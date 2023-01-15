@@ -107,3 +107,29 @@ func Preprocess(wordList []string) []string {
 
 	return newWordList
 }
+
+// GenWordList generates a wordlist from each document
+func GenWordList(Doc string) []string {
+	wordList := []string{}
+
+	r := regexp.MustCompile("[^\\s]+")
+	wordList = r.FindAllString(Doc, -1)
+
+	wordList = Preprocess(wordList)
+	wordList = RemoveDuplicated(wordList)
+
+	return wordList
+}
+
+// GenDocMap creates a hash map of each word in the document
+func GenDocMap(token []string) map[string]bool {
+	documentMap := make(map[string]bool)
+
+	for _, word := range token {
+		if _, value := documentMap[word]; !value {
+			documentMap[word] = true
+		}
+	}
+
+	return documentMap
+}
