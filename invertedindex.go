@@ -1,6 +1,7 @@
 package course_work_parallel_computing
 
 import (
+	"fmt"
 	"log"
 	"regexp"
 	"strings"
@@ -178,4 +179,19 @@ func SequentialBuild() InvertedIndex {
 
 	BuildInvertedIndex(globalDocs, invertedIndex, nil, 0)
 	return *invertedIndex
+}
+
+// Find checks whether the search word is present in the hash
+// map and in case of positive response it outputs all the
+// documents it's present in
+func Find(index InvertedIndex, searchWord string) {
+	word := strings.ToLower(searchWord)
+
+	if index.HashMap[word] != nil {
+		item := index.HashMap[word]
+
+		fmt.Println("Found:", searchWord, "In Docs:", item.DocumentList)
+	} else {
+		fmt.Println("Not Found:", searchWord)
+	}
 }
