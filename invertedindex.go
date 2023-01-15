@@ -157,3 +157,16 @@ func BuildInvertedIndex(DocList []string, index *InvertedIndex, wg *sync.WaitGro
 		}
 	}
 }
+
+// ParallelBuild builds Inverted Index in parallel creating nRoutines GoRoutines
+func ParallelBuild(nRoutines int, wg *sync.WaitGroup) InvertedIndex {
+	globalDocs := GetDocs()
+	invertedIndex := CreateInvertedIndex()
+
+	delta := len(globalDocs) / nRoutines
+
+	for i := 0; i < nRoutines; i++ {
+		go BuildInvertedIndex(globalDocs[i*delta:(i+1)*delta], invertedIndex, wg, i*delta)
+	}
+	return *invertedIndex
+}
