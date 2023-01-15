@@ -133,3 +133,27 @@ func GenDocMap(token []string) map[string]bool {
 
 	return documentMap
 }
+
+// BuildInvertedIndex gets a wordList for each document,
+// processes it and generates a hash map. Next, it generates
+// inverted index of all words.
+func BuildInvertedIndex(DocList []string, index *InvertedIndex, wg *sync.WaitGroup, bias int) {
+	if wg != nil {
+		defer wg.Done()
+	}
+
+	globalDocMap := make([]map[string]bool, 0)
+
+	for _, Doc := range DocList {
+		token := GenWordList(Doc)
+		docMap := GenDocMap(token)
+		globalDocMap = append(globalDocMap, docMap)
+	}
+	// Using the generated hash maps add
+	// each word to the inverted index
+	for DocumentMapIndex, DocumentMap := range globalDocMap {
+		for DocEntry := range DocumentMap {
+			index.AddItem(DocEntry, DocumentMapIndex+bias)
+		}
+	}
+}
