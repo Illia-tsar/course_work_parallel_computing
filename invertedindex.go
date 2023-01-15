@@ -1,6 +1,11 @@
 package course_work_parallel_computing
 
-import "sync"
+import (
+	"log"
+	"regexp"
+	"strings"
+	"sync"
+)
 
 var itemsMutex sync.Mutex
 var mapMutex sync.Mutex
@@ -70,4 +75,35 @@ func CreateInvertedIndex() *InvertedIndex {
 		Items:   []*InvertedIndexItem{},
 	}
 	return invertedIndex
+}
+
+// RemoveDuplicated filters out all duplicate words from each document
+func RemoveDuplicated(wordList []string) []string {
+	keys := make(map[string]bool)
+	uniqueWords := []string{}
+
+	for _, entry := range wordList {
+		if _, value := keys[entry]; !value {
+			keys[entry] = true
+			uniqueWords = append(uniqueWords, entry)
+		}
+	}
+
+	return uniqueWords
+}
+
+// Preprocess removes symbols and converts each word to lowercase
+func Preprocess(wordList []string) []string {
+	newWordList := []string{}
+
+	r, err := regexp.Compile(`[^\w]`)
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, word := range wordList {
+		word = strings.TrimSpace(r.ReplaceAllString(word, " "))
+		newWordList = append(newWordList, strings.ToLower(word))
+	}
+
+	return newWordList
 }
