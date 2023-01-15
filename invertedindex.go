@@ -170,3 +170,12 @@ func ParallelBuild(nRoutines int, wg *sync.WaitGroup) InvertedIndex {
 	}
 	return *invertedIndex
 }
+
+// SequentialBuild builds Inverted Index sequentially
+func SequentialBuild() InvertedIndex {
+	globalDocs := GetDocs()
+	invertedIndex := CreateInvertedIndex()
+
+	BuildInvertedIndex(globalDocs, invertedIndex, nil, 0)
+	return *invertedIndex
+}
