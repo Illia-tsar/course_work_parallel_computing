@@ -62,3 +62,15 @@ func FilenameToDoc(filepath string) string {
 	}
 	return string(f[:])
 }
+
+// GetDocs calls GetFilenames to receive all filepaths for documents
+// to be loaded and loades them with FilenameToDoc
+func GetDocs() []string {
+	var docs []string
+	filenames := GetFilenames()
+
+	for _, v := range filenames {
+		docs = append(docs, FilenameToDoc(v))
+	}
+	return docs
+}
